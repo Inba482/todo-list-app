@@ -1,0 +1,801 @@
+/* ==========================================================================
+   DESIGN SYSTEM & CUSTOM PROPERTIES
+   ========================================================================== */
+:root {
+  /* Color Palette */
+  --bg-primary: #090d16;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  
+  --accent-color: #6366f1;
+  --accent-light: #818cf8;
+  --accent-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  --accent-glow: rgba(99, 102, 241, 0.3);
+  
+  --success-color: #10b981;
+  --success-glow: rgba(16, 185, 129, 0.2);
+  --danger-color: #f43f5e;
+  --danger-hover: #e11d48;
+  
+  /* Glassmorphism Variables */
+  --glass-bg: rgba(17, 24, 39, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-hover: rgba(255, 255, 255, 0.16);
+  --glass-border-active: rgba(99, 102, 241, 0.4);
+  --glass-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  
+  /* Layout & Fonts */
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-title: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --radius-lg: 24px;
+  --radius-md: 14px;
+  --radius-sm: 8px;
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: all 0.2s ease;
+}
+
+/* ==========================================================================
+   RESET & SYSTEM STYLES
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1rem;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Background Ambient Orbs */
+.background-decorations {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(140px);
+  opacity: 0.25;
+  mix-blend-mode: screen;
+}
+
+.orb-1 {
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, #6366f1 0%, rgba(99, 102, 241, 0) 70%);
+  top: -10%;
+  left: -10%;
+  animation: floatOrb1 20s infinite alternate ease-in-out;
+}
+
+.orb-2 {
+  width: 60vw;
+  height: 60vw;
+  background: radial-gradient(circle, #a855f7 0%, rgba(168, 85, 247, 0) 70%);
+  bottom: -15%;
+  right: -10%;
+  animation: floatOrb2 25s infinite alternate ease-in-out;
+}
+
+@keyframes floatOrb1 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(8%, 5%) scale(1.15); }
+}
+
+@keyframes floatOrb2 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-10%, -8%) scale(1.1); }
+}
+
+/* ==========================================================================
+   LAYOUT CONTAINERS
+   ========================================================================== */
+.app-wrapper {
+  width: 100%;
+  max-width: 640px;
+  perspective: 1000px;
+}
+
+.app-container {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-shadow);
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition-smooth);
+}
+
+/* Add a subtle glow overlay to the container */
+.app-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--accent-gradient);
+}
+
+/* ==========================================================================
+   HEADER SECTION
+   ========================================================================== */
+.app-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.brand-logo {
+  width: 42px;
+  height: 42px;
+  background: var(--accent-gradient);
+  border-radius: var(--radius-md);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-primary);
+  box-shadow: 0 8px 16px var(--accent-glow);
+  transform: rotate(-5deg);
+  transition: var(--transition-smooth);
+}
+
+.app-container:hover .brand-logo {
+  transform: rotate(0deg) scale(1.05);
+}
+
+.brand-title h1 {
+  font-family: var(--font-title);
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+}
+
+.brand-title .subtitle {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.date-container {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+}
+
+/* Progress Tracker Styling */
+.progress-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.progress-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.progress-value {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent-light);
+}
+
+.progress-bar-track {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--accent-gradient);
+  box-shadow: 0 0 10px var(--accent-glow);
+  width: 0%;
+  border-radius: 4px;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================================================
+   INPUT FORM STYLES
+   ========================================================================== */
+.todo-form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.input-wrapper {
+  display: flex;
+  gap: 0.75rem;
+  position: relative;
+}
+
+#todoInput {
+  flex-grow: 1;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1.5px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  font-size: 1rem;
+  outline: none;
+  transition: var(--transition-smooth);
+}
+
+#todoInput::placeholder {
+  color: var(--text-muted);
+}
+
+#todoInput:focus {
+  border-color: var(--accent-color);
+  background: rgba(15, 23, 42, 0.75);
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.15);
+}
+
+.add-btn {
+  background: var(--accent-gradient);
+  border: none;
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0 8px 16px rgba(99, 102, 241, 0.2);
+  transition: var(--transition-smooth);
+}
+
+.add-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 20px rgba(99, 102, 241, 0.35);
+}
+
+.add-btn:active {
+  transform: translateY(1px);
+}
+
+/* Validation Toast Alert */
+.validation-toast {
+  position: absolute;
+  top: -45px;
+  left: 0;
+  right: 0;
+  background: var(--danger-color);
+  color: var(--text-primary);
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  opacity: 0;
+  transform: translateY(10px) scale(0.95);
+  pointer-events: none;
+  transition: var(--transition-smooth);
+  box-shadow: 0 8px 24px rgba(244, 63, 94, 0.25);
+  z-index: 10;
+}
+
+.validation-toast.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* ==========================================================================
+   LIST CONTROLS & FILTERING
+   ========================================================================== */
+.list-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border-bottom: 1px solid var(--glass-border);
+  padding-bottom: 1rem;
+}
+
+.task-counter {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.filter-tabs {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid var(--glass-border);
+  border-radius: 30px;
+  display: flex;
+  padding: 3px;
+  position: relative;
+  z-index: 1;
+}
+
+.filter-slider {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  background: var(--accent-gradient);
+  border-radius: 20px;
+  z-index: -1;
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), width 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.filter-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.4rem 1.1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  user-select: none;
+}
+
+.filter-btn:hover {
+  color: var(--text-primary);
+}
+
+.filter-btn.active {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.clear-btn {
+  background: transparent;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--radius-sm);
+  transition: var(--transition-fast);
+}
+
+.clear-btn:hover {
+  color: var(--danger-color);
+  background: rgba(244, 63, 94, 0.08);
+}
+
+/* ==========================================================================
+   DYNAMIC TODO LIST & ITEMS
+   ========================================================================== */
+.list-container {
+  position: relative;
+  min-height: 200px;
+}
+
+.todo-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Individual Task Card */
+.todo-item {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  transition: var(--transition-smooth);
+  animation: fadeInScale 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform, opacity;
+}
+
+.todo-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--glass-border-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Animations for insertion and removal */
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.todo-item.fade-out {
+  opacity: 0 !important;
+  transform: translateY(-10px) scale(0.9) !important;
+  transition: var(--transition-smooth);
+}
+
+/* Custom Checkbox Design */
+.checkbox-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-wrapper input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.custom-checkbox {
+  height: 22px;
+  width: 22px;
+  background: rgba(15, 23, 42, 0.4);
+  border: 1.5px solid var(--glass-border);
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: transparent;
+  transition: var(--transition-fast);
+}
+
+.checkbox-wrapper:hover .custom-checkbox {
+  border-color: var(--accent-light);
+  background: rgba(15, 23, 42, 0.6);
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+.checkbox-wrapper input:checked ~ .custom-checkbox {
+  background: var(--accent-gradient);
+  border-color: transparent;
+  color: var(--text-primary);
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.custom-checkbox svg {
+  width: 14px;
+  height: 14px;
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+  transition: stroke-dashoffset 0.2s ease-in-out;
+}
+
+.checkbox-wrapper input:checked ~ .custom-checkbox svg {
+  stroke-dashoffset: 0;
+}
+
+/* Task Text & Completed Styling */
+.task-text {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  line-height: 1.4;
+  word-break: break-word;
+  transition: var(--transition-smooth);
+  cursor: pointer;
+}
+
+.todo-item.completed {
+  background: rgba(255, 255, 255, 0.005);
+}
+
+.todo-item.completed .task-text {
+  color: var(--text-muted);
+  text-decoration: line-through;
+  text-decoration-color: var(--accent-color);
+}
+
+/* Task Action Buttons */
+.task-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.action-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.action-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.edit-btn:hover {
+  color: var(--accent-light);
+}
+
+.delete-btn:hover {
+  color: var(--danger-color);
+  background: rgba(244, 63, 94, 0.1);
+}
+
+.action-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ==========================================================================
+   INLINE EDIT MODE STYLING
+   ========================================================================== */
+.edit-input-wrapper {
+  display: none; /* Hidden by default */
+  grid-column: 2; /* Occupy center text column */
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.edit-text-input {
+  flex-grow: 1;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1.5px solid var(--accent-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  padding: 0.5rem 0.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  outline: none;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.1);
+}
+
+.edit-actions {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.save-btn {
+  background: var(--success-color);
+  color: var(--text-primary);
+}
+
+.save-btn:hover {
+  background: #0ea5e9; /* custom success highlight */
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.25);
+}
+
+.cancel-btn {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+}
+
+.cancel-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
+/* Active Inline Edit UI State Toggle */
+.todo-item.editing {
+  grid-template-columns: 1fr; /* Make edit input expand fully if needed */
+  border-color: var(--glass-border-active);
+  background: rgba(99, 102, 241, 0.02);
+}
+
+.todo-item.editing .checkbox-wrapper,
+.todo-item.editing .task-text,
+.todo-item.editing .task-actions {
+  display: none !important; /* Hide other task elements */
+}
+
+.todo-item.editing .edit-input-wrapper {
+  display: flex; /* Show the edit wrapper */
+}
+
+/* ==========================================================================
+   EMPTY STATE STYLING
+   ========================================================================== */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  transition: var(--transition-smooth);
+}
+
+.empty-icon-wrapper {
+  width: 64px;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--glass-border);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+  transition: var(--transition-smooth);
+}
+
+.empty-state:hover .empty-icon-wrapper {
+  color: var(--accent-light);
+  border-color: rgba(99, 102, 241, 0.25);
+  transform: rotate(-10deg) scale(1.05);
+}
+
+.empty-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.empty-title {
+  font-family: var(--font-title);
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+  color: var(--text-primary);
+}
+
+.empty-message {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* Toggle displays via script */
+.hidden {
+  display: none !important;
+}
+
+/* ==========================================================================
+   FOOTER SECTION
+   ========================================================================== */
+.app-footer {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-top: 1px solid var(--glass-border);
+  padding-top: 1.5rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.app-footer .copyright {
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   RESPONSIVE MEDIA QUERIES
+   ========================================================================== */
+@media (max-width: 640px) {
+  body {
+    padding: 1rem 0.5rem;
+  }
+  
+  .app-container {
+    padding: 1.5rem;
+    gap: 1.5rem;
+    border-radius: var(--radius-md);
+  }
+  
+  .brand-title h1 {
+    font-size: 1.5rem;
+  }
+  
+  .header-main {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .date-container {
+    align-self: flex-start;
+  }
+  
+  .input-wrapper {
+    flex-direction: column;
+  }
+  
+  .add-btn {
+    padding: 1rem;
+    width: 100%;
+  }
+  
+  .list-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  
+  .filter-tabs {
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .filter-btn {
+    flex-grow: 1;
+    text-align: center;
+  }
+  
+  .clear-btn {
+    text-align: center;
+    width: 100%;
+    padding: 0.6rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--glass-border);
+  }
+}
